@@ -45,7 +45,7 @@ RUN set -x && \
         /src/beast-splitter \
         && \
     pushd /src/beast-splitter && \
-    make -j $(nproc) && \
+    make -j "$(nproc)" && \
     popd && \
     cp -v /src/beast-splitter/beast-splitter /usr/local/bin/beast-splitter && \
     # Clean up
