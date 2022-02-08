@@ -91,7 +91,5 @@ Please feel free to [open an issue on the project's GitHub](https://github.com/s
 
 Join our [Discord channel](https://discord.gg/sTf9uYF) and converse.
 
-
-
 [1]: https://github.com/flightaware/beast-splitter
 [2]: http://www.modesbeast.com/
