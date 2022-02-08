@@ -49,4 +49,7 @@ RUN set -x && \
     # Clean up
     apt-get remove -y "${TEMP_PACKAGES[@]}" && \
     apt-get autoremove -y && \
-    rm -rf /src/* /tmp/* /var/lib/apt/lists/*
+    rm -rf /src/* /tmp/* /var/lib/apt/lists/* && \
+    # Write container version
+    echo "$BRANCH_BEAST_SPLITTER" > /CONTAINER_VERSION && \
+    cat /CONTAINER_VERSION
