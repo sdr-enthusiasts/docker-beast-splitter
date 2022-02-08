@@ -21,6 +21,7 @@ RUN set -x && \
     TEMP_PACKAGES+=(protobuf-c-compiler) && \
     TEMP_PACKAGES+=(libncurses-dev) && \
     TEMP_PACKAGES+=(librrd-dev) && \
+    TEMP_PACKAGES+=(libprotobuf-c-dev) && \
     # Install packages
     apt-get update && \
     apt-get install -y --no-install-recommends \
