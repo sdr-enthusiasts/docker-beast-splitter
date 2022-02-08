@@ -1,0 +1,59 @@
+#!/usr/bin/with-contenv bash
+#shellcheck shell=bash
+
+# Set beast-splitter binary
+BEAST_SPLITTER_BIN="/usr/local/bin/beast-splitter"
+
+# Options
+BEAST_SPLITTER_CMD=()
+
+# --serial arg
+# read from given serial device
+# default: /dev/beast
+BEAST_SPLITTER_CMD+=("--serial")
+BEAST_SPLITTER_CMD+=("${BEAST_SPLITTER_SERIAL:-/dev/beast}")
+
+# --net arg
+# read from given network host:port
+if [[ -n "$BEAST_SPLITTER_NET" ]]; then
+    BEAST_SPLITTER_CMD+=("--net")
+    BEAST_SPLITTER_CMD+=("$BEAST_SPLITTER_NET")
+fi
+
+# --fixed-baud arg (=0)
+# set a fixed baud rate, or 0 for autobauding
+if [[ -n "$BEAST_SPLITTER_BAUD" ]]; then
+    BEAST_SPLITTER_CMD+=("--fixed-baud")
+    BEAST_SPLITTER_CMD+=("$BEAST_SPLITTER_BAUD")
+fi
+
+# --listen arg
+# specify a [host:]port[:settings] to listen on
+# default: 0.0.0.0:30005:R
+BEAST_SPLITTER_CMD+=("--listen")
+BEAST_SPLITTER_CMD+=("${BEAST_SPLITTER_LISTEN:-0.0.0.0:30005:R}")
+
+# --connect arg
+# specify a host:port[:settings] to connect to
+if [[ -n "$BEAST_SPLITTER_CONNECT" ]]; then
+    BEAST_SPLITTER_CMD+=("--connect")
+    BEAST_SPLITTER_CMD+=("$BEAST_SPLITTER_CONNECT")
+fi
+
+# --force arg
+# specify settings to force on or off when configuring the Beast
+if [[ -n "$BEAST_SPLITTER_FORCE" ]]; then
+    BEAST_SPLITTER_CMD+=("--FORCE")
+    BEAST_SPLITTER_CMD+=("$BEAST_SPLITTER_FORCE")
+fi
+
+# Launch beast-splitter
+set -eo pipefail
+# shellcheck disable=SC2016
+"${BEAST_SPLITTER_BIN}" "${BEAST_SPLITTER_CMD[@]}" \
+  2>&1 | stdbuf -o0 sed --unbuffered '/^$/d' | stdbuf -o0 awk '{print "[beast-splitter] " strftime("%Y/%m/%d %H:%M:%S", systime()) " " $0}'
+
+# Explanation of pipes in command above:
+# * `sed --unbuffered '/^$/d'` : this removes blank lines from log output
+# * `awk '{print "[readsb] " strftime("%Y/%m/%d %H:%M:%S", systime()) " " $0}'` : prepends log messages with [beast-splitter] and timestamp
+# The `stdbuf -o0` turns off buffering, so logs appear immediately as they are written
