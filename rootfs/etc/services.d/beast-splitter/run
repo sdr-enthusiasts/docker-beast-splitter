@@ -22,10 +22,8 @@ fi
 
 # --fixed-baud arg (=0)
 # set a fixed baud rate, or 0 for autobauding
-if [[ -n "$BEAST_SPLITTER_BAUD" ]]; then
-    BEAST_SPLITTER_CMD+=("--fixed-baud")
-    BEAST_SPLITTER_CMD+=("$BEAST_SPLITTER_BAUD")
-fi
+BEAST_SPLITTER_CMD+=("--fixed-baud")
+BEAST_SPLITTER_CMD+=("${BEAST_SPLITTER_BAUD:-0}")
 
 # --listen arg
 # specify a [host:]port[:settings] to listen on
