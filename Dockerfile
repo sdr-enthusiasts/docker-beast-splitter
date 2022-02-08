@@ -53,3 +53,5 @@ RUN set -x && \
     # Write container version
     echo "$BRANCH_BEAST_SPLITTER" > /CONTAINER_VERSION && \
     cat /CONTAINER_VERSION
+
+COPY rootfs/ /
