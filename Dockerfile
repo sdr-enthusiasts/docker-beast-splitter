@@ -17,6 +17,10 @@ RUN set -x && \
     TEMP_PACKAGES+=(libboost-regex1.74-dev) && \
     KEPT_PACKAGES+=(libboost-program-options1.74.0) && \
     TEMP_PACKAGES+=(libboost-program-options1.74-dev) && \
+    # Dependencies for viewadsb
+    TEMP_PACKAGES+=(protobuf-c-compiler) && \
+    TEMP_PACKAGES+=(libncurses-dev) && \
+    TEMP_PACKAGES+=(librrd-dev) && \
     # Install packages
     apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -48,6 +52,23 @@ RUN set -x && \
     make -j "$(nproc)" && \
     popd && \
     cp -v /src/beast-splitter/beast-splitter /usr/local/bin/beast-splitter && \
+    # viewadsb: get latest release tag without cloning repo
+    # get simply the latest committed version from the dev (=default) branch rather than the latest tag
+    # this is because Mictronic doesn't update their labels very often, and important bug fixes are needlessly delayed
+    BRANCH_READSB="dev" && \
+    # viewadsb: clone repo
+    git clone \
+      --branch "$BRANCH_READSB" \
+      --depth 1 \
+      --single-branch \
+      'https://github.com/Mictronics/readsb-protobuf.git' \
+      /src/readsb-protobuf \
+      && \
+    # viewadsb: build & install (note, -j seems to have issues, so not using...)
+    pushd /src/readsb-protobuf && \
+    make viewadsb && \
+    popd && \
+    cp -v /src/readsb-protobuf/viewadsb /usr/local/bin/viewadsb && \
     # Clean up
     apt-get remove -y "${TEMP_PACKAGES[@]}" && \
     apt-get autoremove -y && \
