@@ -10,7 +10,7 @@ More information on [beast-splitter][1] is available at the [official repository
 
 | Variable | Controls which `beast-splitter` option | Description | Default |
 | -------- | -------------------------------------- | ----------- | ------- |
-| `BEAST_SPLITTER_SERIAL`  | `--serial`     | Read from given serial device                                  | `/dev/beast` |
+| `BEAST_SPLITTER_SERIAL`  | `--serial`     | Read from given serial device, set to `OFF` to disable serial  | `/dev/beast` |
 | `BEAST_SPLITTER_NET`     | `--net`        | Read from given network host:port                              | Unset |
 | `BEAST_SPLITTER_BAUD`    | `--fixed-baud` | Set a fixed baud rate, or 0 for autobauding                    | `0` |
 | `BEAST_SPLITTER_LISTEN`  | `--listen`     | Specify a `[host:]port[:settings]` to listen on                | `0.0.0.0:30005:R` |
