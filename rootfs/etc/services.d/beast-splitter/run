@@ -10,8 +10,10 @@ BEAST_SPLITTER_CMD=()
 # --serial arg
 # read from given serial device
 # default: /dev/beast
-BEAST_SPLITTER_CMD+=("--serial")
-BEAST_SPLITTER_CMD+=("${BEAST_SPLITTER_SERIAL:-/dev/beast}")
+if [[ -z "${NET_ONLY}" ]]; then
+    BEAST_SPLITTER_CMD+=("--serial")
+    BEAST_SPLITTER_CMD+=("${BEAST_SPLITTER_SERIAL:-/dev/beast}")
+fi
 
 # --net arg
 # read from given network host:port
