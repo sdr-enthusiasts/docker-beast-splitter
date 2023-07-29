@@ -23,33 +23,34 @@ RUN set -x && \
     TEMP_PACKAGES+=(librrd-dev) && \
     TEMP_PACKAGES+=(libprotobuf-c-dev) && \
     KEPT_PACKAGES+=(libprotobuf-c1) && \
+    KEPT_PACKAGES+=(libncurses6) && \
     # Install packages
     apt-get update && \
     apt-get install -y --no-install-recommends \
-        ${KEPT_PACKAGES[@]} \
-        ${TEMP_PACKAGES[@]} \
-        && \
+    ${KEPT_PACKAGES[@]} \
+    ${TEMP_PACKAGES[@]} \
+    && \
     # beast-splitter: get latest release tag without cloning repo
     BRANCH_BEAST_SPLITTER=$( \
-        git \
-            -c 'versionsort.suffix=-' \
-            ls-remote \
-            --tags \
-            --sort='v:refname' \
-            'https://github.com/flightaware/beast-splitter.git' \
-            | grep -v '\^' \
-            | cut -d '/' -f 3 \
-            | grep '^v.*' \
-            | tail -1) \
-        && \
+    git \
+    -c 'versionsort.suffix=-' \
+    ls-remote \
+    --tags \
+    --sort='v:refname' \
+    'https://github.com/flightaware/beast-splitter.git' \
+    | grep -v '\^' \
+    | cut -d '/' -f 3 \
+    | grep '^v.*' \
+    | tail -1) \
+    && \
     # beast-splitter: fetch, build & install
     git clone \
-        --branch "$BRANCH_BEAST_SPLITTER" \
-        --depth 1 \
-        --single-branch \
-        https://github.com/flightaware/beast-splitter.git \
-        /src/beast-splitter \
-        && \
+    --branch "$BRANCH_BEAST_SPLITTER" \
+    --depth 1 \
+    --single-branch \
+    https://github.com/flightaware/beast-splitter.git \
+    /src/beast-splitter \
+    && \
     pushd /src/beast-splitter && \
     make -j "$(nproc)" && \
     popd && \
@@ -60,12 +61,12 @@ RUN set -x && \
     BRANCH_READSB="dev" && \
     # viewadsb: clone repo
     git clone \
-      --branch "$BRANCH_READSB" \
-      --depth 1 \
-      --single-branch \
-      'https://github.com/Mictronics/readsb-protobuf.git' \
-      /src/readsb-protobuf \
-      && \
+    --branch "$BRANCH_READSB" \
+    --depth 1 \
+    --single-branch \
+    'https://github.com/Mictronics/readsb-protobuf.git' \
+    /src/readsb-protobuf \
+    && \
     # viewadsb: build & install (note, -j seems to have issues, so not using...)
     pushd /src/readsb-protobuf && \
     make viewadsb && \
