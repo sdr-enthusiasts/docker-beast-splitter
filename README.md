@@ -8,14 +8,14 @@ More information on [beast-splitter][1] is available at the [official repository
 
 ## Environment Variables
 
-| Variable | Controls which `beast-splitter` option | Description | Default |
-| -------- | -------------------------------------- | ----------- | ------- |
-| `BEAST_SPLITTER_SERIAL`  | `--serial`     | Read from given serial device, set to `OFF` to disable serial  | `/dev/beast` |
-| `BEAST_SPLITTER_NET`     | `--net`        | Read from given network host:port                              | Unset |
-| `BEAST_SPLITTER_BAUD`    | `--fixed-baud` | Set a fixed baud rate, or 0 for autobauding                    | `0` |
-| `BEAST_SPLITTER_LISTEN`  | `--listen`     | Specify a `[host:]port[:settings]` to listen on                | `0.0.0.0:30005:R` |
-| `BEAST_SPLITTER_CONNECT` | `--connect`    | Specify a `host:port[:settings]` to connect to                 | Unset |
-| `BEAST_SPLITTER_FORCE`   | `--force`      | Specify settings to force on or off when configuring the Beast | Unset |
+| Variable                 | Controls which `beast-splitter` option | Description                                                    | Default           |
+| ------------------------ | -------------------------------------- | -------------------------------------------------------------- | ----------------- |
+| `BEAST_SPLITTER_SERIAL`  | `--serial`                             | Read from given serial device, set to `OFF` to disable serial  | `/dev/beast`      |
+| `BEAST_SPLITTER_NET`     | `--net`                                | Read from given network host:port                              | Unset             |
+| `BEAST_SPLITTER_BAUD`    | `--fixed-baud`                         | Set a fixed baud rate, or 0 for autobauding                    | `0`               |
+| `BEAST_SPLITTER_LISTEN`  | `--listen`                             | Specify a `[host:]port[:settings]` to listen on                | `0.0.0.0:30005:R` |
+| `BEAST_SPLITTER_CONNECT` | `--connect`                            | Specify a `host:port[:settings]` to connect to                 | Unset             |
+| `BEAST_SPLITTER_FORCE`   | `--force`                              | Specify settings to force on or off when configuring the Beast | Unset             |
 
 ## Example `docker run`
 
@@ -31,15 +31,15 @@ docker run \
 ## Example `docker-compose.yml` service
 
 ```yaml
-  beast-splitter:
-    image: ghcr.io/sdr-enthusiasts/docker-beast-splitter:latest
-    tty: true
-    container_name: beast-splitter
-    restart: always
-    devices:
-      - /dev/beast:/dev/beast
-    ports:
-      - 30005:30005
+beast-splitter:
+  image: ghcr.io/sdr-enthusiasts/docker-beast-splitter:latest
+  tty: true
+  container_name: beast-splitter
+  restart: always
+  devices:
+    - /dev/beast:/dev/beast
+  ports:
+    - 30005:30005
 ```
 
 ## Testing the container
