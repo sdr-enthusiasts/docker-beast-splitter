@@ -33,7 +33,6 @@ docker run \
 ```yaml
 beast-splitter:
   image: ghcr.io/sdr-enthusiasts/docker-beast-splitter:latest
-  tty: true
   container_name: beast-splitter
   restart: always
   devices:
