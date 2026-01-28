@@ -11,13 +11,27 @@ RUN set -x && \
     # Required for building
     TEMP_PACKAGES+=(build-essential) && \
     # Dependencies for beast-splitter
+    . /etc/os-release && \
+    # distro="$ID" && \
+    # version="$VERSION_ID" && \
+    codename="$VERSION_CODENAME" && \
+    if [[ "$codename" == "trixie" ]]; then \
+    TEMP_PACKAGES+=(libboost1.83-dev) && \
+    KEPT_PACKAGES+=(libboost-system1.83.0) && \
+    TEMP_PACKAGES+=(libboost-system1.83-dev) && \
+    KEPT_PACKAGES+=(libboost-regex1.83.0) && \
+    TEMP_PACKAGES+=(libboost-regex1.83-dev) && \
+    KEPT_PACKAGES+=(libboost-program-options1.83.0) && \
+    TEMP_PACKAGES+=(libboost-program-options1.83-dev); \
+    else \
     TEMP_PACKAGES+=(libboost1.74-dev) && \
     KEPT_PACKAGES+=(libboost-system1.74.0) && \
     TEMP_PACKAGES+=(libboost-system1.74-dev) && \
     KEPT_PACKAGES+=(libboost-regex1.74.0) && \
     TEMP_PACKAGES+=(libboost-regex1.74-dev) && \
     KEPT_PACKAGES+=(libboost-program-options1.74.0) && \
-    TEMP_PACKAGES+=(libboost-program-options1.74-dev) && \
+    TEMP_PACKAGES+=(libboost-program-options1.74-dev); \
+    fi && \
     # Dependencies for viewadsb
     TEMP_PACKAGES+=(protobuf-c-compiler) && \
     TEMP_PACKAGES+=(libncurses-dev) && \
