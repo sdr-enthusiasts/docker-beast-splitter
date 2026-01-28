@@ -43,7 +43,7 @@ jobs:
           echo "Build latest as test: $INPUTS_BUILD_LATEST_AS_TEST"
 
   deploy:
-    name: Deploy without telegraf
+    name: Deploy
     if: |
       github.event.inputs.build_latest_as_test == 'false' ||
       github.event.inputs.build_latest_as_test == ''
@@ -57,6 +57,6 @@ jobs:
       build_latest: true
       docker_latest_tag: trixie-latest
       build_baseimage_test: true
-      build_baseimage_url: :baseimage/:trixie-baseimage
+      build_baseimage_url: :docker-baseimage:base/:docker-baseimage:trixie-base
     secrets:
       ghcr_token: ${{ secrets.GITHUB_TOKEN }}
