@@ -51,7 +51,7 @@ docker exec -it beast-splitter viewadsb
 
 Which should display a departure-lounge-style screen showing all the aircraft being tracked, for example:
 
-```
+```bash
  Hex    Mode  Sqwk  Flight   Alt    Spd  Hdg    Lat      Long   RSSI  Msgs  Ti -
 ────────────────────────────────────────────────────────────────────────────────
  7C801C S                     8450  256  296                   -28.0    14  1
