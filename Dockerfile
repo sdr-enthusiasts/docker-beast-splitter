@@ -90,7 +90,10 @@ RUN --mount=type=bind,source=patches,target=/patches \
     && \
     # viewadsb: build & install (note, -j seems to have issues, so not using...)
     pushd /src/readsb-protobuf && \
-    make viewadsb && \
+    # GCC 15+ (forky) adds -Wunterminated-string-initialization and GCC 16 extends
+    # -Wformat-truncation; upstream builds with -Werror. Diagnostics only: the
+    # Makefile appends to an environment CFLAGS, and GCC 14 ignores unknown -Wno-.
+    CFLAGS="-Wno-unterminated-string-initialization -Wno-format-truncation" make viewadsb && \
     popd && \
     cp -v /src/readsb-protobuf/viewadsb /usr/local/bin/viewadsb && \
     # Clean up
